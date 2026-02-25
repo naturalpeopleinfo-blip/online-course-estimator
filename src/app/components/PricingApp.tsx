@@ -70,7 +70,9 @@ const PLANS: Record<PlanKey, PlanDef> = {
       "編集：不要カット（いらない部分を編集でカットする）",
       "編集：整音（雑音を整えて、聞き取りやすくする）",
       "編集：色調調整（色を整えて、見やすくする）",
+      "テロップ：要点テロップ（章タイトル＋重要ポイントを表示）",
       "テロップ：フルテロップ（話す内容をほぼ全部テロップ化）",
+      "演出：オープニングアニメーション（ロゴ＋タイトルで講座の世界観を整える）",
     ],
     prices: { "15": 120000, "30": 205000, "45": 285000 },
     embedUrl: "https://www.youtube.com/embed/O2WC_lw7wi4",
@@ -166,7 +168,7 @@ export default function PricingApp() {
     LENGTHS.find((l) => l.key === selectedLength)?.label;
 
   return (
-    <div className="min-h-dvh bg-white text-neutral-900 p-6 pb-28 md:pb-6">
+    <div className="min-h-dvh bg-white text-neutral-900 p-6 pb-28 md:pb-32">
       <div className="mx-auto max-w-3xl space-y-6">
 
         <h1 className="text-2xl font-semibold">
@@ -209,8 +211,15 @@ export default function PricingApp() {
                   }`}
                 >
                   <div className="flex justify-between items-center px-5 py-3 border-b border-neutral-200 rounded-t-2xl">
-                    <div className="inline-block rounded-full bg-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1">
-                      {plan.badge}
+                    <div className="flex items-center gap-2">
+                      <div className="inline-block rounded-full bg-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1">
+                        {plan.badge}
+                      </div>
+                      {active && (
+                        <div className="inline-block rounded-full bg-emerald-600 text-white text-xs font-semibold px-3 py-1">
+                          選択中
+                        </div>
+                      )}
                     </div>
                     <div className="flex items-center gap-2">
                       {!active && (
@@ -377,25 +386,32 @@ export default function PricingApp() {
           </div>
         </section>
 
-        {/* 合計（黄色, デスクトップのみ） */}
-        <section
+        {/* 合計（黄色, デスクトップ：画面下に固定） */}
+        <div
           id="summary"
-          className="hidden md:block md:sticky md:top-6 rounded-2xl border border-amber-300 bg-amber-50 p-6 shadow-md"
+          className="hidden md:block fixed bottom-0 left-0 right-0 z-40 border-t border-amber-200 bg-amber-50"
         >
-          <h2 className="font-semibold text-lg mb-3">合計（1本）</h2>
+          <div className="mx-auto max-w-3xl px-6 py-4 flex items-center justify-between gap-6">
+            <div className="min-w-0">
+              <div className="text-xs text-neutral-600">合計（1本）</div>
+              <div className="text-2xl font-bold text-emerald-700 truncate">{yen(total)}</div>
+            </div>
 
-          <div className="space-y-2">
-            <div>基本料金: {yen(basePrice)}</div>
-            <div>オプション合計: {yen(optionsTotal)}</div>
-
-            <div className="text-xl font-semibold text-emerald-700 pt-2 border-t border-amber-200">
-              {yen(total)}
+            <div className="flex items-center gap-6 text-sm text-neutral-700">
+              <div className="text-right">
+                <div className="text-xs text-neutral-500">基本料金</div>
+                <div className="font-semibold">{yen(basePrice)}</div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs text-neutral-500">オプション</div>
+                <div className="font-semibold">{yen(optionsTotal)}</div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
         {/* モバイル：合計を画面下に固定（アプリ風） */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-amber-200 bg-amber-50">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-amber-200 bg-amber-50">
           <div className="mx-auto max-w-3xl px-4 py-3 flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-neutral-600">合計（1本）</div>
