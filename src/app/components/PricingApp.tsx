@@ -172,7 +172,7 @@ export default function PricingApp() {
       <div className="mx-auto max-w-3xl space-y-6">
 
         <h1 className="text-2xl font-semibold">
-          鈴木サチ様ピラティスオンライン講座 映像制作プラン案
+          鈴木サチ様ピラティスオンライン講座 動画製作費用シミュレーター
         </h1>
 
         {/* フロー説明 */}
@@ -372,7 +372,7 @@ export default function PricingApp() {
         </SectionCard>
 
         {/* モバイル：簡易内訳（必要最低限） */}
-        <section className="md:hidden rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <section id="breakdown" className="md:hidden rounded-2xl border border-amber-200 bg-amber-50 p-5">
           <h2 className="font-semibold text-base mb-2">内訳（簡易）</h2>
           <div className="text-sm text-neutral-700 space-y-1">
             <div className="flex justify-between gap-3">
@@ -423,7 +423,7 @@ export default function PricingApp() {
             <button
               type="button"
               onClick={() => {
-                const el = document.getElementById("summary");
+                const el = document.getElementById("breakdown");
                 el?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className="shrink-0 rounded-full bg-emerald-600 text-white text-sm font-semibold px-4 py-2"
