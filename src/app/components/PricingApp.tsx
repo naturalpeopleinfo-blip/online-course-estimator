@@ -104,9 +104,9 @@ const BREAKDOWN_EXAMPLE_15 = [
   { label: "打ち合わせ（オンライン60分）", price: 3000 },
   { label: "撮影費（2時間）", price: 25000 },
   { label: "撮影機材費（シネマカメラ／各種レンズ使用）", price: 10000 },
-  { label: "照明設営・ライティング調整", price: 6000 },
-  { label: "音声収録・レベル管理", price: 6000 },
-  { label: "編集費（構成設計・カット編集）", price: 8000 },
+  { label: "照明設営・ライティング調整", price: 5000 },
+  { label: "音声収録・レベル管理", price: 5000 },
+  { label: "編集費（構成設計・カット編集）", price: 10000 },
   { label: "カラー調整・整音仕上げ", price: 2000 },
 ] as const;
 
