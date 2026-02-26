@@ -100,6 +100,16 @@ const OPTIONS = [
   },
 ];
 
+const BREAKDOWN_EXAMPLE_15 = [
+  { label: "打ち合わせ（オンライン60分）", price: 3000 },
+  { label: "撮影費（2時間）", price: 25000 },
+  { label: "撮影機材費（シネマカメラ／各種レンズ使用）", price: 10000 },
+  { label: "照明設営・ライティング調整", price: 6000 },
+  { label: "音声収録・レベル管理", price: 6000 },
+  { label: "編集費（構成設計・カット編集）", price: 8000 },
+  { label: "カラー調整・整音仕上げ", price: 2000 },
+] as const;
+
 function SectionCard({
   step,
   title,
@@ -167,6 +177,11 @@ export default function PricingApp() {
   const selectedLengthLabel =
     LENGTHS.find((l) => l.key === selectedLength)?.label;
 
+  const breakdownExampleTotal = BREAKDOWN_EXAMPLE_15.reduce(
+    (sum, row) => sum + row.price,
+    0
+  );
+
   return (
     <div className="min-h-dvh bg-white text-neutral-900 p-6 pb-28 md:pb-32">
       <div className="mx-auto max-w-3xl space-y-6">
@@ -174,6 +189,55 @@ export default function PricingApp() {
         <h1 className="text-2xl font-semibold">
           鈴木サチ様ピラティスオンライン講座 動画製作費用シミュレーター
         </h1>
+
+        {/* 冒頭説明（やさしめ） */}
+        <section className="rounded-2xl border border-neutral-200 bg-white p-5 text-sm text-neutral-700 space-y-2">
+          <p>
+            料金は、撮影だけでなく「照明を立てる」「音をきれいに録る」「見やすく編集する」作業を含めた目安です。
+          </p>
+          <p className="text-neutral-600">
+            企画・構成設計（講座内容の整理／台本／章立て／導線など）から一緒に進める場合は、別途ご相談ください。
+          </p>
+        </section>
+
+        {/* 概算の内訳例（表示用） */}
+        <section className="rounded-2xl border border-neutral-200 bg-white p-5 text-sm text-neutral-700 space-y-3">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="font-semibold text-base text-neutral-900">
+                制作費の考え方（概算例）
+              </div>
+              <div className="text-neutral-600 mt-1">
+                ■ 基本制作費 内訳例（〜15分 / Aプラン想定）
+              </div>
+            </div>
+
+            <div className="shrink-0 text-right">
+              <div className="text-xs text-neutral-500">合計</div>
+              <div className="text-xl font-bold text-neutral-900">
+                {yen(breakdownExampleTotal)}
+              </div>
+            </div>
+          </div>
+
+          <ul className="space-y-2">
+            {BREAKDOWN_EXAMPLE_15.map((row) => (
+              <li
+                key={row.label}
+                className="flex items-center justify-between gap-3"
+              >
+                <span className="text-neutral-700">{row.label}</span>
+                <span className="font-semibold text-neutral-900">
+                  {yen(row.price)}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="text-xs text-neutral-500 pt-2 border-t border-neutral-200">
+            ※ 内訳は「何に費用がかかるか」を分かりやすくするための概算例です。内容・尺・テロップ量・修正状況により増減します。
+          </div>
+        </section>
 
         {/* フロー説明 */}
         <section className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 space-y-2">
